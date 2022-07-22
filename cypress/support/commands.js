@@ -37,3 +37,28 @@
 //     cy.get("#description").type(description);
 //     cy.get("#authors").type(authors);
 // });
+Cypress.Commands.add("createUser", (user) => {
+    cy.request({
+        method: "POST",
+        url: "https://petstore.swagger.io/v2/user",
+        body: {
+            id: 1,
+            username: "string",
+            firstName: "string",
+            lastName: "string",
+            email: "string",
+            password: "string",
+            phone: "string",
+            userStatus: 1,
+        },
+    }).then((resp) => {
+        cy.request({
+            method: "POST",
+            url: "https://petstore.swagger.io/v2/user",
+            headers: {
+                Authorization: "Wowfun" + resp.body.token,
+            },
+            body: user,
+        });
+    });
+}); 
